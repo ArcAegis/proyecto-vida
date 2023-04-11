@@ -1,0 +1,218 @@
+<style>
+  .formulario-tab {
+    display: none;
+  }
+  .formulario-tab.active {
+    display: block;
+  }
+
+  .nav-tabs .nav-link:not(.active) {
+    color: #495057;
+  }
+
+  .nav-tabs .nav-item .active {
+    color: var(--info);
+  }
+
+  .cuil-list {
+    height: 250px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .cuil-list-item {
+    margin-bottom: 5px;
+  }
+</style>
+
+<div class="container mt-5">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a
+        class="nav-link active"
+        id="agregarCuil"
+        data-toggle="tab"
+        href="#agregarCuil"
+        role="tab"
+        aria-controls="agregarCuil"
+        aria-selected="true"
+        >Agregar CUIL</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="editarCuils"
+        data-toggle="tab"
+        href="#editarCuils"
+        role="tab"
+        aria-controls="editarCuils"
+        aria-selected="false"
+        >Editar CUILs</a
+      >
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div
+      class="tab-pane fade show active"
+      id="agregarCuil"
+      role="tabpanel"
+      aria-labelledby="editarCuils"
+    >
+      <div class="form-group mt-4">
+        <label for="cuil">Agregar CUIL:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cuil"
+          name="cuil"
+          placeholder="Ingrese el CUIL"
+        />
+      </div>
+    </div>
+    <div
+      class="tab-pane fade"
+      id="editarCuils"
+      role="tabpanel"
+      aria-labelledby="editarCuils"
+    >
+      <h3 class="mt-4">Editar CUILs:</h3>
+    </div>
+  </div>
+</div>
+
+<!-- <div id="modal" class="modal fade">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Título del modal</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#ingresoCuils">Ingreso de CUILS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#editarCuils">Editar CUILS</a>
+          </li>
+        </ul>
+        <div class="card">
+          <div id="ingresoCuils" class="formulario-tab active">
+            <form class="p-3">
+              <h2>Formulario de operaciones en CUILs</h2>
+              <form>
+                <div class="form-group">
+                  <label for="cuils">Listado de CUILs:</label>
+                  <textarea
+                    class="form-control"
+                    id="cuils"
+                    name="cuils"
+                    rows="3"
+                    placeholder="Ingrese una lista de CUILs separados por coma"
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="operacion">Operación a realizar:</label>
+                  <select class="form-control" id="operacion" name="operacion">
+                    <option value="">Seleccione una opción</option>
+                    <option value="anulacion_alta">Anulación de alta</option>
+                    <option value="anulacion_baja">Anulación de baja</option>
+                    <option value="modificacion_ingreso">
+                      Modificación fecha de ingreso
+                    </option>
+                    <option value="modificacion_egreso">
+                      Modificación fecha de egreso
+                    </option>
+                    <option value="motivo_baja">Motivo de baja</option>
+                  </select>
+                </div>
+              </form>
+            </form>
+          </div>
+
+          <div id="editarCuils" class="formulario-tab fade">
+            <form class="p-3">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-3">
+                    <div class="list-group" id="cuilsGroup"></div>
+                  </div>
+                  <div class="col-9">
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#datosAFIP"
+                          >Datos de AFIP</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#datosEditables"
+                          >Datos editables</a
+                        >
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane fade show active" id="datosAFIP">
+                        <h4>Contenido de la pestaña 1</h4>
+                      </div>
+                      <div class="tab-pane fade" id="datosEditables">
+                        <h4>Contenido de la pestaña 2</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<script>
+  $(document).ready(function () {
+    // Abrir el modal al hacer click en el botón
+    $("#prueba").click(function () {
+      $("#modal").modal("show");
+    });
+
+    // Cambiar de formulario al hacer clic en los nav-tabs
+    $(".nav-tabs a").click(function (e) {
+      e.preventDefault();
+      $(this).tab("show");
+    });
+  });
+
+  // JavaScript
+  let cuils = $("#cuilsGroup");
+  const select = document.querySelector("#mi-select");
+
+  $("#cuils").change(function () {
+    let cuils = $("#cuils").val();
+    if (cuils.length) {
+      cuils = cuils.split(",").map((cuil) => cuil.replaceAll(".", ""));
+      cuils.forEach((cuil) => {
+        const listItem = $("<a>")
+          .addClass("list-group-item list-group-item-action")
+          .text(cuil);
+        $("#cuilsGroup").append(listItem);
+      });
+    }
+
+    $(".list-group-item-action").click(function () {
+      $(this).toggleClass("active");
+      $(this).siblings().removeClass("active");
+    });
+  });
+</script>
