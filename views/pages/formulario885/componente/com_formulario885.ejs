@@ -25,6 +25,9 @@
   .cuil-list-item {
     margin-bottom: 5px;
   }
+  h6 {
+    display: none;
+  }
 </style>
 
 <div class="container mt-5">
@@ -70,6 +73,10 @@
           name="cuil"
           placeholder="Ingrese el CUIL"
         />
+        <button type="submit" class="btn btn-success mt-2" onclick="ValidarCuil()" id="btnAgregarCuil">Agregar</button>
+      </div>
+      <div><h6 id="title" style="display: block;">Cuils Agregados:</h6>
+        <div id="CuilsAgregados"></div>
       </div>
     </div>
     <div
@@ -181,7 +188,7 @@
 </div> -->
 
 <script>
-  $(document).ready(function () {
+$(document).ready(function () {
     // Abrir el modal al hacer click en el botón
     $("#prueba").click(function () {
       $("#modal").modal("show");
@@ -215,4 +222,46 @@
       $(this).siblings().removeClass("active");
     });
   });
+// A partir de aca trabaja Nico //
+var cuilss = [];
+
+  function capturarDatos(){
+    let cuil = document.getElementById("cuil").value;
+    cuilss.push({cuil:cuil})
+    mostrarDatos();
+  }
+  function mostrarDatos(){
+    let titulo = document.getElementById("title");
+    if(cuilss.length >0){
+      titulo.style.display = 'block';
+    }else {
+      titulo.style.display = 'none'
+    }
+    let CuilsAgregados = document.getElementById('CuilsAgregados');
+    CuilsAgregados.innerHTML = "";
+
+    cuilss.forEach(function(datos,indice){
+      let item = document.createElement("li");
+      item.innerHTML = `${datos.cuil} <button class="btn btn-danger m-2" onclick="eliminar(${indice})">Eliminar</button>`
+      CuilsAgregados.appendChild(item);
+    })
+  }
+  function eliminar(indice) {
+    cuilss.splice(indice, 1);
+
+    mostrarDatos();
+}
+
+function ValidarCuil(cuil) {
+      let numeros =  /^\d{2}-\d{8}-\d{1}$/;
+      let cuilInput = document.getElementById("cuil");
+      let cuilIngresado = cuilInput.value;
+      if (numeros.test(cuilIngresado)) {
+        console.log("El campo es válido.");
+        capturarDatos();
+      } else {
+        console.error("El campo no es válido.");
+        alert("❌!Algo a salido mal¡ ❌El campo no puede contener espacios, letras o ningun tipo de caracter especial. Por favor revisarlo nuevamente");
+      }
+    }
 </script>
